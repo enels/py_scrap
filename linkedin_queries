@@ -1,0 +1,21 @@
+""" Linkedin Searching Code """
+
+'site:af.linkedin.com/pub/ "gmail.com" OR "yahoo.com" OR "ymail.com" OR "msn.com" OR "hotmail.com" OR "mac.com" OR "ovimail.com" OR "verizon.com" OR "aol.com" OR "mail.com"'
+
+site:au.linkedin.com/pub/ "CEO" ("@gmail.com" OR "@yahoo.com" OR "@hotmail.com") before:2019 AND after:2018
+
+site:de.linkedin.com/pub/ "gmail.com" OR "yahoo.com" OR "ymail.com" OR "msn.com" OR "hotmail.com" OR "mac.com" OR "ovimail.com" OR " AND "sales manager"
+
+site:de.linkedin.com/pub/ "gmail.com" OR "yahoo.com" OR "ymail.com" OR "msn.com" OR "hotmail.com" OR "mac.com" OR "ovimail.com" OR " AND "architect" before:2019 AND after:2017
+
+site:au.linkedin.com/pub/ "gmail.com" OR "yahoo.com" OR "hotmail.com" OR "mac.com" OR "ovimail.com" OR " OR "architect" before:2019 AND after:2010
+
+site:cn.linkedin.com/pub/ "gmail.com" OR "yahoo.com" OR "hotmail.com" OR "mac.com" OR "ovimail.com" OR " OR "architect" before:2019 AND after:2010
+
+site:ch.linkedin.com/pub/ "@gmail.com" AND "Agriculture"
+
+
+""" 
+	Email extraction site from text ------> -------> --------> http://eel.surf7.net.my <------- <------- <--------
+
+"""
