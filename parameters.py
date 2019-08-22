@@ -10,6 +10,8 @@ linkedin_password = "afterall123"
 
 # file to store the user datas
 filename = "user_datas.csv"
-search_term = 'site:de.linkedin.com/pub/ " "Builders" (@gmail.com" OR "@yahoo.com" OR "@hotmail.com")'
+
+# user defined query (this value should always change)
+user_query = '.linkedin.com/pub/ " "Builders" (@gmail.com" OR "@yahoo.com" OR "@hotmail.com")'
 
 
