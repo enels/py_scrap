@@ -3,6 +3,8 @@
 # imports selenium
 from selenium import webdriver
 
+# import the NoSuchElementException error
+from selenium.common.exceptions import NoSuchElementException
 
 # import Keys
 from selenium.webdriver.common.keys import Keys
@@ -75,6 +77,11 @@ total_codes = len(country_code)
     
 import re
 
+# patter to check if google's reCaptcha page is displayed instead of the search
+# result page
+######### NB: This pattern begins every google reCaptcha page #####
+pattern = 'https://www.google.com/sorry/index?continue'
+
 # goes through each of the country for that particular query entered by the user
 for index in range(0,total_codes):
     search_term = 'site:' + country_code[index] + parameters.user_query
@@ -102,10 +109,19 @@ for index in range(0,total_codes):
     with open("C:\\Users\\User\\" + parameters.filename, "w") as result:
         writer = csv.writer(result, delimiter=",")
 
+        # assumes at least one page will be displayed on the search
         more_pages = True
+
+        # loops through each pages
         while more_pages == True:
+
+            time.sleep(5)
+            
+            # script continues after captcha has been completed successfully
             # select the classes (this helps to filter the ads away)
+            
             linkedin_emails = driver.find_elements_by_class_name('st')
+                
 
             # using python's list comprehension to filter out the mails
             linkedin_emails = [email.text for email in linkedin_emails]
@@ -117,11 +133,14 @@ for index in range(0,total_codes):
             total_num_of_mails = total_num_of_mails + length
             
             print("Total Number of emails in page: ", length)
+
+            # loops through each email
             for text in  linkedin_emails:
 
                 # extracts the mail
                 email = re.findall("([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text)
 
+                # checks to avoid duplicates
                 if len(email) > 1 and email[0] == email[1]:
                     # output the user's parameters to a csv file
                     writer.writerow(email[0])
@@ -134,14 +153,27 @@ for index in range(0,total_codes):
 
             time.sleep(10)
 
+            # go to the next page of the search result
             try:
                 driver.find_element_by_link_text("Next").click()
-            except:
+                
+            except NoSuchElementException:
+                # when it gets beyond the very last page
                 print ("Error: Page not Found")
-                more_pages = False
-            
-            #breakpoint
-            
+
+                # stores the current url of the page
+                url_string = driver.current_url
+
+                # checks if the pattern matches the start of the url string
+                result_match = re.findall (pattern, url_string)
+
+                if result_match[0] == pattern:
+                    print ("Please fill in the google captcha, you've got 5 mins")
+                    time.sleep(300)
+                else:
+                    print ("Switching Country...")
+                    more_pages = False
+                        
 print ("Total number of linkedin emails extracted: ", total_num_of_mails)
 print ("End of Search")
 driver.quit()
