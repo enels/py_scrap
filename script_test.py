@@ -80,7 +80,7 @@ import re
 # patter to check if google's reCaptcha page is displayed instead of the search
 # result page
 ######### NB: This pattern begins every google reCaptcha page #####
-pattern = 'https://www.google.com/sorry/index?continue'
+pattern = '^https:\/\/www.google.com\/sorry\/index\?continue'
 
 # goes through each of the country for that particular query entered by the user
 for index in range(0,total_codes):
@@ -104,7 +104,9 @@ for index in range(0,total_codes):
 
     # stores the total number of mails extracted
     total_num_of_mails = 0
-    
+
+    # assumes the next button on search page is always present
+    next_button = True
     
     with open("C:\\Users\\User\\" + parameters.filename, "w") as result:
         writer = csv.writer(result, delimiter=",")
@@ -159,21 +161,26 @@ for index in range(0,total_codes):
                 
             except NoSuchElementException:
                 # when it gets beyond the very last page
-                print ("Error: Page not Found")
+                # or when google's recaptcha shows up
+                next_button = False
 
-                # stores the current url of the page
+            if next_button == False:
+                # checks if the error (not finding the next page button) is
+                # due to google's recaptcha
                 url_string = driver.current_url
-
                 # checks if the pattern matches the start of the url string
-                result_match = re.findall (pattern, url_string)
+                result_match = re.search('^https:\/\/www.google.com\/sorry\/index\?continue', url_string)
 
-                if result_match[0] == pattern:
+                # checks if a pattern was found
+                if result_match != None and len(result_match[0]) > 0:
                     print ("Please fill in the google captcha, you've got 5 mins")
                     time.sleep(300)
+                    next_button = True
                 else:
                     print ("Switching Country...")
                     more_pages = False
-                        
+                    next_button = True
+                    
 print ("Total number of linkedin emails extracted: ", total_num_of_mails)
 print ("End of Search")
 driver.quit()
