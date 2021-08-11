@@ -3,15 +3,16 @@
 	contents: contains all the parameters to be used by script.py
 """
 # path to the chrome driver
+# this will differ in your system
 chrome_path = r"C:\Users\Edobor\py-scrap\chromedriver"
 
 # path to country code file
 country_codes = "C:\\Users\\Edobor\\py-scrap\\country_codes"
 # email of the linkedin account
-linkedin_username = "enomauwaifo@gmail.com"
+linkedin_username = "users-email-address-goes-in-here"
 
 # password of the account
-linkedin_password = "afterall123"
+linkedin_password = "users-passwrod-goes-in-here"
 
 # file to store the user datas
 filename = "user_datas.csv"
