@@ -1,4 +1,4 @@
-""" filename: script.py """
+5""" filename: script.py """
 
 # imports selenium
 from selenium import webdriver
@@ -21,8 +21,12 @@ from parsel import Selector
 # imports time
 import time
 
+# sets the proxy server ip address
+options = webdriver.ChromeOptions()
+options.add_argument('--proxy-server=173.249.35.163:10010')
+
 # Defining the path to the chrome driver
-driver = webdriver.Chrome(r"C:\Users\User\py-scrap\chromedriver")
+driver = webdriver.Chrome(r"C:\Users\User\py-scrap\chromedriver", options=options)
 
 # specifies the path to the chromedriver
 #driver = webdriver.Chrome(r"C:\Users\enoma\chromedriver")
@@ -79,8 +83,6 @@ import re
 
 # patter to check if google's reCaptcha page is displayed instead of the search
 # result page
-######### NB: This pattern begins every google reCaptcha page #####
-pattern = '^https:\/\/www.google.com\/sorry\/index\?continue'
 
 # goes through each of the country for that particular query entered by the user
 for index in range(0,total_codes):
@@ -169,7 +171,7 @@ for index in range(0,total_codes):
                 # due to google's recaptcha
                 url_string = driver.current_url
                 # checks if the pattern matches the start of the url string
-                result_match = re.search('^https:\/\/www.google.com\/sorry\/index\?continue', url_string)
+                result_match = re.search(parameters.pattern, url_string)
 
                 # checks if a pattern was found
                 if result_match != None and len(result_match[0]) > 0:
