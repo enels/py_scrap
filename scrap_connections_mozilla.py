@@ -116,6 +116,7 @@ for contact in mynetwork:
     time.sleep(random.uniform(0.5, 1.9))
     
 # opens the file to store the connection emails
+# put the path to your own directory
 fh = open("C:\\Users\\Edobor\\connection_emails.txt", "w")
 
 # iterates through the collected emails list and stores it in a file

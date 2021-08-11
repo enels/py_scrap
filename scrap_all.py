@@ -26,6 +26,7 @@ options = webdriver.ChromeOptions()
 options.add_argument('--proxy-server=173.249.35.163:10010')
 
 # Defining the path to the chrome driver
+# this may differ in your system
 driver = webdriver.Chrome(r"C:\Users\User\py-scrap\chromedriver", options=options)
 
 # specifies the path to the chromedriver
